@@ -10,11 +10,7 @@
 
 **[➡️ Открыть Live Демо](https://turgunbek-project-videodubbing.streamlit.app/)**
 
-Краткая видео-демонстрация работы приложения:
-
-[![Нажмите, чтобы посмотреть видео-демонстрацию](demo_thumbnail.png)](https://github.com/turgunbek/project_video_dubbing/raw/main/Demo_1.wmv)
-<!-- Нужно будет вставить видео как-то-->
-[Видео-демонстрация](Demo_1.wmv)
+Краткая видео-демонстрация работы приложения доступна в файле [`Demo_1.wmv`](https://github.com/turgunbek/project_video_dubbing/raw/main/Demo_1.wmv) (длительность 2 минуты):
 
 
 ## ⚙️ Архитектура пайплайна
