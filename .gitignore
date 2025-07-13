@@ -1,0 +1,66 @@
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+build/
+dist/
+develop-eggs/
+.eggs/
+*.egg-info/
+.env # Environment variables
+.venv/ # Virtual environment folder (often named 'venv')
+venv/  # Common virtual environment name
+env/   # Another common virtual environment name
+
+# Jupyter Notebook files
+.ipynb_checkpoints/
+
+# Folders
+audio_splitter/
+dubbed_audio_0/
+dubbed_audio_1/
+dubbed_audio_2/
+dubbed_audio_3/
+dubbed_audio_4/
+dubbed_audio_5/
+dubbed_audio_fixed_voice_prompt_chunk_3/
+final_video_0/
+final_video_1/
+pipeline_output/
+processed/
+splited_audio_robust_0/
+splited_audio_robust_1/
+splited_audio_robust_2/
+splited_audio_robust_10/
+splited_audio_vad/
+srt/
+transcriptions_0/
+transcriptions_1/
+translations_0/
+translations_2/
+translations_wmt19/
+
+# Files
+assemble_video_0.py
+assemble_video_1.py
+assemble_video_2.py
+assemble_video_3.py
+assemble_video_4.py
+Bill_Gates.mp3
+Cameron_Russell.mp3
+data_preprocessing.ipynb
+Looks aren't everything. Believe me, I'm a model.  Cameron Russell  TED - TED.mp3
+Looks aren't everything. Believe me, I'm a model. _ Cameron Russell _ TED.mp4
+parts_of_pipeline.ipynb
+robust_splitter_0.py
+robust_splitter_1.py
+robust_splitter_vad.py
+robust_splitter_with_timings.py
+splitter.py
+Task.txt
+test_tts_0.py
+test_tts_1.py
+test_tts_2.py
+The next outbreak We’re not ready  Bill Gates  TED - TED.mp3
+The next outbreak_ We’re not ready _ Bill Gates _ TED.mp4
