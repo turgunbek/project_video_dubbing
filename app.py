@@ -3,7 +3,7 @@ import streamlit as st
 import os
 import glob
 from pathlib import Path
-import torch
+# import torch
 
 # --- Конфигурация страницы и заголовки ---
 st.set_page_config(layout="wide", page_title="Демонстрация пайплайна видео-дубляжа")
@@ -16,6 +16,7 @@ LIVE_DEMO_SAMPLES_ROOT = "live_demo_samples"
 FINAL_VIDEO_ROOT = "final_video"
 SPEAKERS = ["Bill_Gates", "Cameron_Russell"]
 
+
 # --- Кэширование для тяжелых моделей ---
 # Это гарантирует, что модели загружаются только один раз
 @st.cache_resource
@@ -25,6 +26,7 @@ def load_whisper_model():
     model = whisper.load_model("base")
     print("Whisper model loaded.")
     return model
+
 
 @st.cache_resource
 def load_translation_model():
@@ -36,6 +38,7 @@ def load_translation_model():
     print("Translation model loaded.")
     return tokenizer, model
 
+
 @st.cache_resource
 def load_tts_model():
     from TTS.api import TTS
@@ -44,6 +47,7 @@ def load_tts_model():
     model = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
     print("TTS model loaded.")
     return model
+
 
 # --- Функции для Live Демо ---
 def run_live_pipeline(audio_path, voice_prompt_path):
@@ -76,10 +80,10 @@ def run_live_pipeline(audio_path, voice_prompt_path):
     placeholder3.info("Загрузка модели TTS (это может занять несколько минут)...")
     model_tts = load_tts_model()
     placeholder3.warning("Генерация аудио... Пожалуйста, подождите.")
-    
+
     # Добавляем интонационную паузу
     padded_text = f"... {russian_text}"
-    
+
     output_tts_path = "live_demo_output.wav"
     model_tts.tts_to_file(
         text=padded_text,
@@ -89,7 +93,7 @@ def run_live_pipeline(audio_path, voice_prompt_path):
     )
     placeholder3.success("Генерация аудио завершена!")
     st.audio(output_tts_path)
-    
+
     return output_tts_path
 
 
@@ -99,12 +103,12 @@ tab1, tab2 = st.tabs(["🔍 Исследование готовых резуль
 
 with tab1:
     st.header("Исследование готовых результатов пайплайна")
-    
+
     selected_speaker = st.selectbox("Выберите спикера для исследования:", SPEAKERS, key="speaker_select")
 
     if selected_speaker:
         st.subheader(f"Финальный результат для: {selected_speaker}")
-        
+
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("##### Оригинальное видео")
@@ -116,24 +120,24 @@ with tab1:
 
         with col2:
             st.markdown("##### Видео с русской озвучкой")
-            dubbed_video_path = os.path.join(FINAL_VIDEO_ROOT, f"{selected_speaker}_dubbed_final.mp4")
+            dubbed_video_path = os.path.join(FINAL_VIDEO_ROOT, f"{selected_speaker}_dubbed.mp4")
             if os.path.exists(dubbed_video_path):
                 st.video(dubbed_video_path)
             else:
                 st.warning("Файл дублированного видео не найден.")
-        
+
         st.divider()
         st.subheader("Пошаговое исследование артефактов")
 
         # --- Динамический выбор чанка ---
         speaker_artifacts_path = os.path.join(ARTIFACTS_ROOT, selected_speaker)
         original_chunks_path = os.path.join(speaker_artifacts_path, "splited_audio_robust")
-        
+
         if os.path.exists(original_chunks_path):
             # Находим все чанки и сортируем их
             chunk_files = glob.glob(os.path.join(original_chunks_path, "*.wav"))
             chunk_files.sort(key=lambda x: int(Path(x).stem.split('-')[-1]))
-            
+
             if chunk_files:
                 chunk_numbers = [Path(f).stem for f in chunk_files]
                 selected_chunk_name = st.select_slider(
@@ -193,15 +197,19 @@ with tab2:
     if sample_files:
         selected_sample_name = st.selectbox("Выберите аудиофрагмент для обработки:", sample_names)
         selected_sample_path = os.path.join(LIVE_DEMO_SAMPLES_ROOT, selected_sample_name)
-        
+
         st.write("Исходный аудиофрагмент:")
         st.audio(selected_sample_path)
 
         st.write("Для клонирования голоса необходим образец. Выберите спикера, чей голос использовать:")
         voice_speaker = st.selectbox("Выберите голос:", SPEAKERS, key="voice_select")
-        
+
         # Определяем путь к "золотому" промпту
-        voice_prompt_path = os.path.join(ARTIFACTS_ROOT, voice_speaker, "splited_audio_robust", f"{voice_speaker}-chunk-5.wav")
+        if voice_speaker == "Bill_Gates":
+            voice_prompt_path = os.path.join(ARTIFACTS_ROOT, voice_speaker, "splited_audio_robust", f"{voice_speaker}-chunk-3.wav")
+        elif voice_speaker == "Cameron_Russell":
+            voice_prompt_path = os.path.join(ARTIFACTS_ROOT, voice_speaker, "splited_audio_robust", f"{voice_speaker}-chunk-5.wav")
+
         st.write(f"Будет использован голос из файла: `{os.path.basename(voice_prompt_path)}`")
         st.audio(voice_prompt_path)
 
