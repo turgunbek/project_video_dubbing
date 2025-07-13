@@ -8,10 +8,10 @@ dist/
 develop-eggs/
 .eggs/
 *.egg-info/
-.env # Environment variables
-.venv/ # Virtual environment folder (often named 'venv')
-venv/  # Common virtual environment name
-env/   # Another common virtual environment name
+.env
+.venv/
+venv/
+env/
 
 # Jupyter Notebook files
 .ipynb_checkpoints/
