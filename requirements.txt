@@ -1,0 +1,12 @@
+streamlit
+tqdm==4.67.1
+sacremoses==0.1.1
+sentencepiece==0.2.0
+torch==2.5.1
+torchaudio==2.5.1
+pydub==0.25.1
+moviepy==2.2.1
+transformers==4.36.2
+TTS==0.22.0
+silero-vad==5.1.2
+openai-whisper
